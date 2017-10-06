@@ -1,0 +1,542 @@
+<module name="BinSoft.CMS">
+
+ <forms>
+
+
+  <form name="SiteForm" caption="Strona WWW|{ptitle}" table="bsc_sites" image="db" width="1060" height="720" buffers="true">
+   <script src="SiteForm.pas" />
+   <tabs width="400" align="left" margins="10" marginright="0">
+     <tab caption="Podstawowe">
+        <edit name="ptitle" caption="Tytuł" width="370" required="true" />
+        <memo name="pdesc" caption="Opis" width="370" height="40" />
+        <edit name="purl" caption="Adres strony" width="370" required="true" />
+        <shape type="line" width="370" />
+        <hint text="Powiąż stronę WWW z odpowiednią firmą, oddziałem i użytkownikiem." width="370" height="50" position="bottom" offset="20" />
+        <combobox name="idcompany" caption="Powiązana firma" type="int" mtype="select" default="{_idcompany_}" width="260">
+              <option table="bs_company" where="pdel=0" orderby="pname" id="id">{pname}</option>
+        </combobox>
+        <combobox name="idbranch" caption="Powiązany oddział" type="int" mtype="select" default="{_idbranch_}" width="260">
+              <option table="bs_branches" where="pdel=0" orderby="pname" id="id">{pname}</option>
+        </combobox>
+        <combobox name="idowner" caption="Powiązany użytkownik" type="int" mtype="user" default="{_iduser_}" width="260" />
+        <shape type="line" width="370" />
+        <edit name="pemail" caption="Adres e-mail nadawcy wiadomości" width="370" required="true" />
+        <memo name="pfooter" caption="Stopka" width="370" height="80" />
+     </tab>
+   </tabs>
+   <tabs align="client" tabposition="bottom" margins="10">
+       <tab caption="Opcje">
+         <groupbox caption="Podstawowe" align="top" margins="10" autoheight="true" scroll="false">
+           <edit name="phost" caption="Host" width="370" required="true" align="top" />
+         </groupbox>
+         <layout align="top" height="120">
+             <groupbox caption="Strona WWW" align="left" margins="5" margintop="0" startleft="0" width="145" scroll="true">
+               <checkbox name="psite" caption="Włączona" />
+               <comboedit name="psite_skin" caption="Skórka" width="110">
+                 <option id="">Brak</option>
+                 <option table="bsc_tpls" id="pname" getfields="pname, ptitle" orderby="ptitle">{ptitle}</option>
+               </comboedit>
+             </groupbox>
+             <groupbox caption="Strona użytkownika" align="left" margins="5" margintop="0" startleft="0" width="145" scroll="true">
+                   <checkbox name="puser" caption="Włączona" />
+                   <combobox name="puser_skin" caption="Skórka" width="110">
+                       <option id="">Brak</option>
+                       <option table="bsc_tpls" id="pname" getfields="pname, ptitle" orderby="ptitle">{ptitle}</option>
+                   </combobox>
+             </groupbox>
+             <groupbox caption="Strona resellera" align="left" margins="5" margintop="0" startleft="0" width="145" scroll="true">
+                 <checkbox name="preseller" caption="Włączona" />
+                 <comboedit name="preseller_skin" caption="Skórka" width="110">
+                     <option id="">Brak</option>
+                     <option table="bsc_tpls" id="pname" getfields="pname, ptitle" orderby="ptitle">{ptitle}</option>
+                 </comboedit>
+             </groupbox>
+             <groupbox caption="Strona administratora" align="left" margins="5" margintop="0" startleft="0" width="145" scroll="true">
+                   <checkbox name="padmin" caption="Włączona" />
+                   <comboedit name="padmin_skin" caption="Skórka" width="110">
+                       <option id="">Brak</option>
+                       <option table="bsc_tpls" id="pname" getfields="pname, ptitle" orderby="ptitle">{ptitle}</option>
+                   </comboedit>
+             </groupbox>
+         </layout>
+         <groupbox caption="META" align="top" autoheight="mtrue" margins="10" margintop="0" scroll="false">
+          <edit name="pmtitle" caption="Tytuł (title)" width="270" required="true" anchors="left, top, right" align="top" />
+          <memo name="pmdesc" caption="Opis(description)" width="270" height="40" anchors="left, top, right" align="top" />
+          <memo name="pmkeys" caption="Słowa kluczowe (keywords)" width="270" height="40" anchors="left, top, right" align="top" />
+         </groupbox>
+       </tab>
+       <tab caption="Menu">
+         <tree name="treeMenu" align="client" bigcaption="Zarządzaj menu głównym" table="bsc_menu" where="idsite={id}" template="{ptitle} #{purl}    [LP={plp}]" orderby="plp, ptitle" root="Menu">
+           <menu>
+             <item caption="Dodaj" onclick="treeMenuAdd" />
+             <item caption="Edytuj" onclick="treeMenuEdit" />
+             <item caption="Usuń" onclick="treeMenuDel" />
+           </menu>
+         </tree>
+       </tab>
+       <tab caption="Sklep">
+         <layout align="top" height="120">
+             <groupbox caption="Sklep" align="left" margins="5" margintop="0" startleft="0" width="610" scroll="true">
+                 <checkbox name="pshop" caption="Włączona" />
+                 <combobox name="idm" caption="Magazyn" width="160">
+                     <option id="">Brak</option>
+                     <option table="bs_stocks" id="id" getfields="id,ptitle">{ptitle}</option>
+                 </combobox>
+                 <combobox name="idprice" caption="Cennik" width="150" top="-1">
+                     <option id="">Brak</option>
+                     <option table="bs_pricing" id="id" getfields="id,pname">{pname}</option>
+                 </combobox>
+                 <combobox name="pricenb" caption="Pokazuj ceny" width="105" top="-1">
+                     <option id="0">Brutto</option>
+                     <option id="1">Netto</option>
+                 </combobox>
+                 <combobox name="idcat" caption="Kategoria główna" width="140" top="-1">
+                     <option id="">Brak</option>
+                     <option table="bs_groups" id="id" getfields="id,pname" where="tblname='bs_stockindex' AND (wtype=0 OR wtype IS NULL) AND (idparent=0 OR idparent IS NULL)">{pname}</option>
+                 </combobox>
+             </groupbox>
+         </layout>
+         <groupbox align="top" margins="5" caption="Opcje" autoheight="true">
+               <checkbox name="opc_w1" caption="Ukryj produkty bez podanej ceny sprzedaży" align="top" default="1" />
+               <checkbox name="opc_w2" caption="Ukryj produkty ze stanem zerowym" align="top" default="1" />
+         </groupbox>
+
+       </tab>
+
+   </tabs>
+  </form>
+
+  <form name="MenuItemForm" caption="Element menu|{ptitle}, ID={id}" table="bsc_menu" image="ustawienia" borderstyle="single" width="500" height="500" buffers="false" modal="true" btnsavevisible="false" btnprintvisible="false">
+   <tabs align="client" margins="10" tabposition="none">
+     <tab caption="Podstawowe">
+         <field name="idsite" caption="IDSite" />
+         <field name="idr" caption="IDR" />
+         <edit name="ptitle" caption="Tytuł" width="400" />
+         <edit name="purl" caption="URL" width="400" />
+         <checkbox name="pvisible" caption="Widoczny" />
+         <spinbox name="plp" caption="Kolejność" width="100" />
+         <shape type="line" width="450" />
+         <edit name="ptab" caption="Identyfikator zakładki" width="400" />
+         <edit name="pimage" caption="Element graficzny" width="400" />
+     </tab>
+   </tabs>
+  </form>
+
+
+
+  <form name="ArticleForm" caption="Artykuł|{ptitle}" table="bsc_articles" image="db" width="1000" height="700" buffers="true">
+   <script src="ArticleForm.pas" />
+
+   <layout height="215" align="top" scroll="false" marginleft="10" margintop="10">
+     <layout align="left" width="400">
+       <edit name="ptitle" caption="Tytuł" required="true" align="top" />
+       <edit name="pmodrewrite" caption="Przyjazny adres (mod-rewrite)" align="top" />
+       <layout align="top" height="60" startleft="0">
+         <combobox name="pstatus" caption="Status" default="1" width="150">
+            <option id="0">Ukryty</option>
+            <option id="1">Widoczny</option>
+            <option id="2">Specjalny</option>
+         </combobox>
+         <combobox name="idsite" caption="Artykuł powiązany ze stroną" default="0" width="200" top="-1">
+            <option id="0">Dowolna</option>
+            <option table="bsc_sites" id="id" getfields="id,ptitle" orderby="ptitle">{ptitle}</option>
+         </combobox>
+       </layout>
+       <edit name="pauthor" caption="Autor" align="top" />
+     </layout>
+     <layout align="client">
+         <tabs align="client" margins="10">
+           <tab caption="Opcje">
+               <checkbox name="popc_mark" caption="Markdown" width="250" />
+           </tab>
+           <tab caption="SEO" margins="10" marginright="15">
+             <edit name="pseo_title" caption="Tytuł" align="top" />
+             <memo name="pseo_desc" caption="Opis" align="top" height="40" />
+             <edit name="pseo_keyw" caption="Słowa kluczowe" align="top" />
+           </tab>
+           <tab caption="Zaawansowane">
+               <comboedit name="ptpl" caption="Szablon" default="" width="250">
+                  <option id=""></option>
+                  <option id="pname" table="bsc_tpls_fl" getfields="pname" orderby="pname">{pname}</option>
+               </comboedit>
+               <comboedit name="pctrl" caption="Kontroler" default="" width="250" top="-1">
+                  <option id=""></option>
+               </comboedit>
+               <edit name="pactivetab" caption="Aktywna zakładka" width="250" />
+           </tab>
+          </tabs>
+     </layout>
+   </layout>
+
+   <tabs align="client" tabposition="bottom" margins="10" margintop="0">
+     <tab caption="Treść artykułu">
+        <htmleditor name="pbody" align="client" fontfamily="Courier New" editortype="html;markdown;" editorselect="html" />
+     </tab>
+     <tab caption="Galerie" scroll="false" loaddelay="true">
+       <gallery name="galeria" align="client" imagefieldid="pimageid" />
+     </tab>
+   </tabs>
+  </form>
+
+
+  <form name="BlogForm" caption="Wpis bloga|{ptitle}" table="bsc_blog" image="db" width="1000" height="700" buffers="true">
+   <script src="BlogForm.pas" />
+
+   <layout height="215" align="top" scroll="false" marginleft="10" margintop="10">
+     <layout align="left" width="400">
+       <edit name="ptitle" caption="Tytuł" required="true" align="top" />
+       <edit name="pmodrewrite" caption="Przyjazny adres (mod-rewrite)" align="top" />
+       <layout align="top" height="60" startleft="0">
+         <combobox name="pstatus" caption="Status" default="1" width="150">
+            <option id="0">Ukryty</option>
+            <option id="1">Widoczny</option>
+            <option id="2">Specjalny</option>
+         </combobox>
+         <combobox name="idsite" caption="Artykuł powiązany ze stroną" default="0" width="200" top="-1">
+            <option id="0">Dowolna</option>
+            <option table="bsc_sites" id="id" getfields="id,ptitle" orderby="ptitle">{ptitle}</option>
+         </combobox>
+       </layout>
+       <edit name="pauthor" caption="Autor" align="top" />
+     </layout>
+     <layout align="client">
+         <tabs align="client" margins="10">
+           <tab caption="Opcje">
+               <checkbox name="popc_mark" caption="Markdown" width="250" />
+               <calendaredit name="pdate" caption="Data" textalign="center" width="140" />
+               <edit name="pcat" caption="Kategoria" width="250" />
+               <edit name="pplace" caption="Miejsce" width="245 " top="-1" />
+           </tab>
+           <tab caption="Tagi">
+               <listeditor caption="Tagi" name="wtags" align="client" margins="10" />
+           </tab>
+           <tab caption="SEO" margins="10" marginright="15">
+             <edit name="pseo_title" caption="Tytuł" align="top" />
+             <memo name="pseo_desc" caption="Opis" align="top" height="40" />
+             <edit name="pseo_keyw" caption="Słowa kluczowe" align="top" />
+           </tab>
+           <tab caption="Zaawansowane">
+               <comboedit name="ptpl" caption="Szablon" default="" width="250">
+                  <option id=""></option>
+                  <option id="pname" table="bsc_tpls_fl" getfields="pname" orderby="pname">{pname}</option>
+               </comboedit>
+               <comboedit name="pctrl" caption="Kontroler" default="" width="250" top="-1">
+                  <option id=""></option>
+               </comboedit>
+               <edit name="pactivetab" caption="Aktywna zakładka" width="250" />
+           </tab>
+          </tabs>
+     </layout>
+   </layout>
+
+   <tabs align="client" tabposition="bottom" margins="10" margintop="0">
+     <tab caption="Treść artykułu">
+        <memo name="phead" caption="Zajawka" align="top" fontfamily="Courier New" height="100" margins="5" />
+        <htmleditor name="pbody" align="client" fontfamily="Courier New" editortype="html;markdown;" editorselect="html" />
+     </tab>
+     <tab caption="Galerie" scroll="false" loaddelay="true">
+       <gallery name="galeria" align="client" imagefieldid="pimageid" />
+     </tab>
+   </tabs>
+  </form>
+
+  <form name="NewsForm" caption="Nowa wiadomość|{ptitle}" table="bsc_news" image="db" width="1000" height="700" buffers="true">
+   <script src="NewsForm.pas" />
+
+   <layout height="215" align="top" scroll="false" marginleft="10" margintop="10">
+     <layout align="left" width="400">
+       <edit name="ptitle" caption="Tytuł" required="true" align="top" />
+       <edit name="pmodrewrite" caption="Przyjazny adres (mod-rewrite)" align="top" />
+       <layout align="top" height="60" startleft="0">
+         <combobox name="pstatus" caption="Status" default="1" width="150">
+            <option id="0">Ukryty</option>
+            <option id="1">Widoczny</option>
+            <option id="2">Specjalny</option>
+         </combobox>
+         <combobox name="idsite" caption="Artykuł powiązany ze stroną" default="0" width="200" top="-1">
+            <option id="0">Dowolna</option>
+            <option table="bsc_sites" id="id" getfields="id,ptitle" orderby="ptitle">{ptitle}</option>
+         </combobox>
+       </layout>
+       <edit name="pauthor" caption="Autor" align="top" />
+     </layout>
+     <layout align="client">
+         <tabs align="client" margins="10">
+           <tab caption="Opcje">
+               <checkbox name="popc_mark" caption="Markdown" width="250" />
+               <dateedit name="pdate" caption="Data" textalign="center" width="150" />
+               <edit name="pcat" caption="Kategoria" width="250" />
+           </tab>
+           <tab caption="Tagi">
+               <listeditor caption="Tagi" name="wtags" align="client" margins="10" />
+           </tab>
+           <tab caption="SEO" margins="10" marginright="15">
+             <edit name="pseo_title" caption="Tytuł" align="top" />
+             <memo name="pseo_desc" caption="Opis" align="top" height="40" />
+             <edit name="pseo_keyw" caption="Słowa kluczowe" align="top" />
+           </tab>
+           <tab caption="Zaawansowane">
+               <comboedit name="ptpl" caption="Szablon" default="" width="250">
+                  <option id=""></option>
+                  <option id="pname" table="bsc_tpls_fl" getfields="pname" orderby="pname">{pname}</option>
+               </comboedit>
+               <comboedit name="pctrl" caption="Kontroler" default="" width="250" top="-1">
+                  <option id=""></option>
+               </comboedit>
+               <edit name="pactivetab" caption="Aktywna zakładka" width="250" />
+           </tab>
+          </tabs>
+     </layout>
+   </layout>
+
+   <tabs align="client" tabposition="bottom" margins="10" margintop="0">
+     <tab caption="Treść wiadomości">
+        <memo name="phead" caption="Zajawka" align="top" fontfamily="Courier New" height="100" margins="5" />
+        <htmleditor name="pbody" caption="Treść" align="client" fontfamily="Courier New" editortype="html;markdown;" editorselect="html" />
+     </tab>
+     <tab caption="Galerie" scroll="false" loaddelay="true">
+       <gallery name="galeria" align="client" imagefieldid="pimageid" />
+     </tab>
+   </tabs>
+  </form>
+
+  <form name="EventForm" caption="Nowe wydarzenie|{ptitle}" table="bsc_events" image="db" width="1000" height="700" buffers="true">
+   <script src="EventForm.pas" />
+
+   <layout height="215" align="top" scroll="false" marginleft="10" margintop="10">
+     <layout align="left" width="400">
+       <edit name="ptitle" caption="Tytuł" required="true" align="top" />
+       <edit name="pmodrewrite" caption="Przyjazny adres (mod-rewrite)" align="top" />
+       <layout align="top" height="60" startleft="0">
+         <combobox name="pstatus" caption="Status" default="1" width="150">
+            <option id="0">Ukryty</option>
+            <option id="1">Widoczny</option>
+            <option id="2">Specjalny</option>
+         </combobox>
+         <combobox name="idsite" caption="Artykuł powiązany ze stroną" default="0" width="200" top="-1">
+            <option id="0">Dowolna</option>
+            <option table="bsc_sites" id="id" getfields="id,ptitle" orderby="ptitle">{ptitle}</option>
+         </combobox>
+       </layout>
+       <edit name="pauthor" caption="Autor" align="top" />
+     </layout>
+     <layout align="client">
+         <tabs align="client" margins="10">
+           <tab caption="Opcje">
+               <checkbox name="popc_mark" caption="Markdown" width="250" />
+               <dateedit name="pdate" correspond="ptime" caption="Data rozpoczęcia" format="short" width="140" />
+               <timeedit cname="ptime" caption="Godzina" textalign="center" top="-1" width="100" />
+               <edit name="pcat" caption="Kategoria" width="250" />
+               <edit name="pplace" caption="Miejsce" width="245 " top="-1" />
+           </tab>
+           <tab caption="Tagi">
+               <listeditor caption="Tagi" name="wtags" align="client" margins="10" />
+           </tab>
+           <tab caption="SEO" margins="10" marginright="15">
+             <edit name="pseo_title" caption="Tytuł" align="top" />
+             <memo name="pseo_desc" caption="Opis" align="top" height="40" />
+             <edit name="pseo_keyw" caption="Słowa kluczowe" align="top" />
+           </tab>
+           <tab caption="Zaawansowane">
+               <comboedit name="ptpl" caption="Szablon" default="" width="250">
+                  <option id=""></option>
+                  <option id="pname" table="bsc_tpls_fl" getfields="pname" orderby="pname">{pname}</option>
+               </comboedit>
+               <comboedit name="pctrl" caption="Kontroler" default="" width="250" top="-1">
+                  <option id=""></option>
+               </comboedit>
+               <edit name="pactivetab" caption="Aktywna zakładka" width="250" />
+           </tab>
+          </tabs>
+     </layout>
+   </layout>
+
+   <tabs align="client" tabposition="bottom" margins="10" margintop="0">
+     <tab caption="Treść wiadomości">
+        <memo name="phead" caption="Zajawka" align="top" fontfamily="Courier New" height="100" margins="5" />
+        <htmleditor name="pbody" caption="Treść" align="client" fontfamily="Courier New" editortype="html;markdown;" editorselect="html" margins="5" />
+     </tab>
+     <tab caption="Galerie" scroll="false" loaddelay="true">
+       <gallery name="galeria" align="client" imagefieldid="pimageid" />
+     </tab>
+   </tabs>
+  </form>
+
+
+  <form name="SliderForm" caption="Slider|{pname}" table="bsn_sliders" image="db" width="1000" height="700" buffers="true">
+     <layout align="top" autoheight="true">
+       <edit name="pname" caption="Tytuł" width="400" required="true" />
+       <edit name="pident" caption="Identyfikator" width="200" required="true" unique="true" top="-1" textalign="center" edittype="uppercase" />
+       <combobox name="pstatus" caption="Status" width="150" top="-1" default="1">
+         <option id="0">Ukryty</option>
+         <option id="1">Widoczny</option>
+       </combobox>
+     </layout>
+     <showview view="BinSoft.CMS.SlidersViewLevel1" align="client" panelsearchvisible="false" paneltopvisible="false" paneltitlevisible="false" />
+  </form>
+
+
+  <form name="SliderFormLevel1" caption="Edycja slajdu" table="bsn_sliders_pr" image="db" width="1000" height="700" buffers="true">
+   <field name="idslider" />
+   <layout align="top" autoheight="true">
+       <edit name="pname" caption="Tytuł" width="400" required="true" />
+       <combobox name="pstatus" caption="Status" width="150" top="-1" default="1">
+         <option id="0">Ukryty</option>
+         <option id="1">Widoczny</option>
+       </combobox>
+   </layout>
+   <tabs width="400" align="client" margins="10" marginright="0">
+     <tab caption="Galeria">
+         <gallery name="galeria" align="client" />
+     </tab>
+     <tab caption="Teksty">
+         <showview view="BinSoft.CMS.SlidersViewLevel2" align="client" panelsearchvisible="false" paneltopvisible="false" paneltitlevisible="false" />
+     </tab>
+   </tabs>
+  </form>
+
+  <form name="SliderFormLevel2" caption="Edycja tekstu" table="bsn_sliders_txt" image="db" width="500" height="400" buffers="true">
+   <field name="idslider" />
+   <field name="idslide" />
+   <tabs width="400" align="client" margins="10" marginright="0">
+     <tab caption="Podstawowe">
+       <memo name="pcontent" caption="Treść" width="400" height="90" />
+       <edit name="pdata_x" caption="X" width="200" required="true" default="0" />
+	   <combobox name="pstatus" caption="Status" width="150" top="-1" default="1">
+		 <option id="1">Aktywny</option>
+         <option id="0">Nieaktywny</option>
+       </combobox>
+       <edit name="pdata_y" caption="Y" width="200" required="true" default="0" />
+       <edit name="pfontsize" caption="Rozmiar czcionki" width="150" top="-1" default="40" />
+     </tab>
+   </tabs>
+  </form>
+
+
+  <form name="BlockForm" caption="Bloki HTML" table="bsc_blocks" image="db" width="1000" height="700" buffers="true">
+     <layout align="top" height="280">
+       <layout align="left" width="450">
+           <edit name="pident" caption="Identyfikator" width="200" required="true" unique="true" top="-1" textalign="center" edittype="uppercase" />
+           <combobox name="pstatus" caption="Status" width="150" top="-1" default="1">
+             <option id="0">Ukryty</option>
+             <option id="1">Widoczny</option>
+           </combobox>
+           <shape type="line" width="370" />
+           <edit name="ptitle" caption="Tytuł" width="400" />
+           <edit name="purl" caption="URL" width="400" />
+           <memo name="pcontent" caption="Treść" width="400" height="90" />
+       </layout>
+       <tabs align="client" margins="5">
+         <tab caption="Pomoc">
+             <hint text="Bloki HTML to specyficzne fragmenty kodu wstawianie do strony WWW. Są ściśle związane z.." align="client" position="top" offset="20" margins="40" />
+         </tab>
+         <tab caption="Zaawansowane">
+
+         </tab>
+       </tabs>
+     </layout>
+     <tabs align="client" margins="5">
+       <tab caption="Galeria">
+         <gallery name="galeria" align="client" />
+       </tab>
+       <tab caption="Podelementy">
+         <showview view="BinSoft.CMS.BlocksViewLevel1" align="client" panelsearchvisible="false" paneltopvisible="false" paneltitlevisible="false" />
+       </tab>
+     </tabs>
+  </form>
+
+
+  <form name="BlockFormLevel1" caption="Bloki HTML - podelementy" table="bsc_blocks_pr" image="db" width="900" height="700" buffers="true">
+     <script src="BlockFormLevel1.pas" />
+     <field name="iddoc" />
+     <layout align="top" height="280">
+       <layout align="left" width="450">
+           <edit name="pident" caption="Identyfikator" width="200" required="true" top="-1" textalign="center" edittype="uppercase" />
+           <combobox name="pstatus" caption="Status" width="150" top="-1" default="1">
+             <option id="0">Ukryty</option>
+             <option id="1">Widoczny</option>
+           </combobox>
+           <shape type="line" width="370" />
+           <edit name="ptitle" caption="Tytuł" width="400" />
+           <edit name="purl" caption="URL" width="400" />
+           <memo name="pcontent" caption="Treść" width="400" height="90" />
+       </layout>
+       <tabs align="client" margins="5">
+         <tab caption="Pomoc">
+             <hint text="Bloki HTML to specyficzne fragmenty kodu wstawianie do strony WWW. Są ściśle związane z.." align="client" position="top" offset="20" margins="40" />
+         </tab>
+         <tab caption="Zaawansowane">
+
+         </tab>
+       </tabs>
+     </layout>
+     <tabs align="client" margins="5">
+       <tab caption="Galeria">
+         <gallery name="galeria" align="client" />
+       </tab>
+     </tabs>
+  </form>
+
+
+  <form name="GalleryForm" caption="Galeria|{ptitle}" table="bsc_galleries" image="db" width="1000" height="700" buffers="true">
+   <script src="GalleryForm.pas" />
+   <tabs width="400" align="left" margins="10" marginright="0">
+     <tab caption="Podstawowe">
+         <combobox name="pstatus" caption="Status" default="1" width="150">
+            <option id="0">Ukryty</option>
+            <option id="1">Widoczny</option>
+         </combobox>
+         <combobox name="idsite" caption="Galeria powiązana ze stroną" default="0" width="200" top="-1">
+            <option id="0">Dowolna</option>
+            <option table="bsc_sites" id="id" getfields="id,ptitle" orderby="ptitle">{ptitle}</option>
+         </combobox>
+        <edit name="ptitle" caption="Nazwa" width="370" required="true" />
+        <edit name="pident" caption="Identyfikator" width="150" required="true" edittype="uppercase" textalign="center" />
+        <edit name="pmodrewrite" caption="Przyjazny adres (mod-rewrite)" width="200" top="-1" />
+     </tab>
+   </tabs>
+   <tabs align="client" tabposition="bottom" margins="10">
+       <tab caption="Galerie" scroll="false">
+         <gallery name="galeria" align="client" />
+       </tab>
+   </tabs>
+  </form>
+
+ </forms>
+
+ <plugins>
+   <plugin name="CMSContractors" placebyclassname="BinSoft.Contractors.ContractorForm;">
+       <tabs name="pcRight">
+         <tab caption="CMS">
+              <combobox name="cms_idsite" caption="Macierzysta strona WWW" width="370" textalign="center" top="-1">
+                <option id="0">Brak konta macierzystego</option>
+                <option table="bsc_sites" id="id" getfields="id,ptitle">{ptitle}</option>
+              </combobox>
+              <shape type="line" width="470" />
+              <edit name="cms_email" caption="E-mail" width="180" valid="#email#" mtype="email" />
+              <edit name="cms_pass" caption="Hasło" mtype="sha1" password="true" width="180" top="-1" />
+              <combobox name="cms_status" caption="Status konta" width="180" textalign="center">
+                <option id="0">Nieaktywne</option>
+                <option id="1">Zablokowane</option>
+                <option id="2">Aktywne</option>
+                <option id="10">Konto Gościa</option>
+              </combobox>
+              <hint text="Jeśli chcesz ograniczyć kontrahentowi dostęp do widoku niektórych kategorii (w serwisie online) - określ w polu poniżej kategorie, które mają być dla niego widoczne." height="70" width="480" position="bottom" offset="20" margins="5" />
+              <panel height="330" margins="10" margintop="0" width="480">
+                          <listbox cname="mProdCats" caption="Kategorie produktów" margins="5" marginbottom="0" align="client">
+                            <option table="bs_catprod" id="id" where="bs_catprod.pidcontractor={id}" cache="false">{ppath}</option>
+                          </listbox>
+                          <layout align="bottom" autoheight="true">
+                            <button name="btnCatProdAdd" caption="Dodaj" onclick="catProdBtn:1" />
+                            <button name="btnCatProdDel" caption="Usuń" onclick="catProdBtn:2" top="-1" />
+                          </layout>
+              </panel>
+
+
+         </tab>
+       </tabs>
+       <script src="CMSContractors.pas" />
+    </plugin>
+ </plugins>
+
+</module>

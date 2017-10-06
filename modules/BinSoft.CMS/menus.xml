@@ -1,0 +1,17 @@
+<module name="BinSoft.CMS">
+
+ <categories>
+   <category caption="BinSoft - CMS" ifoption="bsxcms">
+     <item caption="Strony WWW" desc="Strony WWW" image="cms_strony" onclick="showHomeView:BinSoft.CMS.SitesView" iftableexist="bsc_sites" />
+     <item caption="Artykuły" desc="Artykuły" image="cms_artykuly" onclick="showHomeView:BinSoft.CMS.ArticlesView" iftableexist="bsc_articles" />
+     <item caption="Wiadomości" desc="Wiadomości" image="cms_blog" onclick="showHomeView:BinSoft.CMS.NewsView" iftableexist="bsc_news" />
+     <item caption="Wydarzenia" desc="Wydarzenia" image="crm_zadania" onclick="showHomeView:BinSoft.CMS.EventsView" iftableexist="bsc_events" />
+     <item caption="Blog" desc="Blog" image="cms_blog" onclick="showHomeView:BinSoft.CMS.BlogView" iftableexist="bsc_blogs" />
+     <item caption="Slajdery" desc="Sliders" image="cms_slidery" onclick="showHomeView:BinSoft.CMS.SlidersView" iftableexist="bsc_sliders" />
+     <item caption="Galerie" desc="Galerie" image="cms_galeria" onclick="showHomeView:BinSoft.CMS.GaleriesView" iftableexist="bsc_galleries" />
+     <item caption="Bloki" desc="Bloki" image="cms_artykuly" onclick="showHomeView:BinSoft.CMS.BlocksView" iftableexist="bsc_blocks" />
+     <iitem caption="Logi - DotPay" desc="Logi płatności DotPay" image="cms_logi" onclick="showHomeView:BinSoft.CMS.LogiDotpayView" iftableexist="bsc_dotpay" />
+   </category>
+ </categories>
+
+</module>

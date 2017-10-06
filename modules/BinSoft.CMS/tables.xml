@@ -1,0 +1,376 @@
+<module name="BinSoft.CMS" caption="BinSoft - CMS" desc="System CMS do zarządzania stronami WWW" required="1" >
+
+ <tables>
+
+  <table name="bsc_tpls" caption="Szablony grafiki">
+    <field name="add_id_user" type="int" mtype="add_idusers" createindex="true" />
+    <field name="add_time" type="datetime" mtype="add_time" />
+    <field name="modyf_id_user" type="int" mtype="modyf_idusers" createindex="true" />
+    <field name="modyf_time" type="datetime" mtype="modyf_time" />
+    <field name="ptitle" caption="Tytuł szablonu" type="varchar" size="150" />
+    <field name="pname" caption="Nazwa szablonu" type="varchar" size="150" />
+  </table>
+
+  <table name="bsc_tpls_fl" caption="Pliki szablonów">
+    <field name="add_id_user" type="int" mtype="add_idusers" createindex="true" />
+    <field name="add_time" type="datetime" mtype="add_time" />
+    <field name="modyf_id_user" type="int" mtype="modyf_idusers" createindex="true" />
+    <field name="modyf_time" type="datetime" mtype="modyf_time" />
+    <field name="pname" caption="Nazwa szablonu" type="varchar" size="150" />
+  </table>
+
+
+  <table name="bsc_sites" caption="CMS: Strony WWW">
+    <field name="add_id_user" type="int" mtype="add_idusers" createindex="true" />
+    <field name="add_time" type="datetime" mtype="add_time" />
+    <field name="modyf_id_user" type="int" mtype="modyf_idusers" createindex="true" />
+    <field name="modyf_time" type="datetime" mtype="modyf_time" />
+
+    <field name="idcompany" caption="Powiązana firma" type="int" createindex="true" relation="bs_company" />
+    <field name="idbranch" caption="Powiązany oddział" type="int" mtype="select" relation="bs_branches" />
+    <field name="idowner" caption="Powiązany opiekun" type="int" mtype="select" createindex="true" relation="bs_users" />
+
+
+    <field name="ptitle" caption="Tytuł strony" type="varchar" size="250" />
+    <field name="phost" caption="Host" type="varchar" size="150" />
+    <field name="purl" caption="Host" type="varchar" size="150" />
+    <field name="pdesc" caption="Opis strony" type="text" />
+
+    <field name="pmtitle" caption="Tytuł (title)" type="varchar" size="250" />
+    <field name="pmdesc" caption="Opis (description)" type="text" />
+    <field name="pmkeys" caption="Słowa kluczowe (keywords)" type="text" />
+
+    <field name="psite" caption="Strona WWW włączona" type="int" default="1" />
+    <field name="psite_skin" caption="Skórka stron WWW" type="varchar" size="50" />
+
+    <field name="puser" caption="Panel użytkownika włączony" type="int" default="0" />
+    <field name="puser_skin" caption="Skórka panelu użytkownika" type="varchar" size="50" />
+
+    <field name="preseller" caption="Panel resellera włączony" type="int" default="0" />
+    <field name="preseller_skin" caption="Skórka panelu resellera" type="varchar" size="50" />
+
+    <field name="padmin" caption="Panel administrator włączony" type="int" default="0" />
+    <field name="padmin_skin" caption="Skórka panelu administratora" type="varchar" size="50" />
+
+    <field name="pshop" caption="Sklep włączony" type="int" default="0" />
+    <field name="idm" caption="ID magazynu" type="int" createindex="true" relation="bs_stocks" />
+    <field name="idcat" caption="ID kategorii" type="int" createindex="true" relation="bs_groups" />
+    <field name="idprice" caption="ID cennika" type="int" createindex="true" relation="bs_pricing" />
+    <field name="pricenb" caption="Rodzaj wyświetlanych cen" type="int" />
+
+    <field name="opc_w1" caption="Ukryj produkty bez podanej ceny" type="int" default="1" />
+    <field name="opc_w2" caption="Ukryj produkty ze stanem zerowym" type="int" default="1" />
+
+    <field name="pemail" caption="Adres e-mail nadawcy wiadomości" type="varchar" size="250" />
+    <field name="pfooter" caption="Stopka" type="text" />
+  </table>
+
+  <table name="bsc_articles" caption="CMS: Artykuły">
+    <field name="add_id_user" type="int" mtype="add_idusers" createindex="true" />
+    <field name="add_time" type="datetime" mtype="add_time" />
+    <field name="modyf_id_user" type="int" mtype="modyf_idusers" createindex="true" />
+    <field name="modyf_time" type="datetime" mtype="modyf_time" />
+    <field name="idsite" type="int" default="0" createindex="true" relation="bsc_sites" />
+
+    <field name="ptitle" caption="Tytuł artykułu" type="varchar" size="250" />
+    <field name="pauthor" caption="Autor" type="varchar" size="100" />
+    <field name="pmodrewrite" caption="Przyjazny adres URL" type="varchar" size="250" />
+    <field name="pstatus" caption="Status" type="int" default="0" />
+    <field name="pbody" caption="Treść artykułu" type="text" />
+    <field name="ptpl" caption="Szablon" type="varchar" size="150" />
+    <field name="pctrl" caption="Kontroler" type="varchar" size="150" />
+    <field name="pactivetab" caption="Aktywna zakładka" type="varchar" size="150" />
+
+    <field name="pshows" caption="Wyświetleń" type="int" default="0" />
+
+    <field name="pimageid" caption="ID zdjęcia głównego" type="int" default="0" createindex="true" relation="bs_attachments" foreign="true" />
+    <field name="popc_mark" caption="Markdown" type="int" default="1" />
+
+    <field name="pseo_title" caption="Tytuł artykułu (SEO)" type="varchar" size="250" />
+    <field name="pseo_desc" caption="Opis artykułu (SEO)" type="varchar" size="250" />
+    <field name="pseo_keyw" caption="Słowa kluczowe artykułu (SEO)" type="varchar" size="250" />
+  </table>
+
+  <table name="bsc_galleries" caption="CMS: Galerie">
+    <field name="add_id_user" type="int" mtype="add_idusers" createindex="true" />
+    <field name="add_time" type="datetime" mtype="add_time" />
+    <field name="modyf_id_user" type="int" mtype="modyf_idusers" createindex="true" />
+    <field name="modyf_time" type="datetime" mtype="modyf_time" />
+    <field name="idsite" type="int" default="0" createindex="true" relation="bsc_sites" />
+
+    <field name="ptitle" caption="Tytuł artykułu" type="varchar" size="250" />
+    <field name="pimageid" caption="ID zdjęcia głównego" type="int" default="0" createindex="true" relation="bs_attachments" foreign="true" />
+    <field name="pident" caption="Identyfikator" type="varchar" />
+    <field name="pmodrewrite" caption="Przyjazny adres URL" type="varchar" size="250" />
+    <field name="pstatus" caption="Status" type="int" default="0" />
+
+    <field name="pactivetab" caption="Aktywna zakładka" type="varchar" size="150" />
+
+    <field name="pshows" caption="Wyświetleń" type="int" default="0" />
+    <field name="pseo_title" caption="Tytuł artykułu (SEO)" type="varchar" size="250" />
+    <field name="pseo_desc" caption="Opis artykułu (SEO)" type="varchar" size="250" />
+    <field name="pseo_keyw" caption="Słowa kluczowe artykułu (SEO)" type="varchar" size="250" />
+  </table>
+
+
+  <table name="bsc_blog" caption="CMS: Blog">
+    <field name="add_id_user" type="int" mtype="add_idusers" createindex="true" />
+    <field name="add_time" type="datetime" mtype="add_time" />
+    <field name="modyf_id_user" type="int" mtype="modyf_idusers" createindex="true" />
+    <field name="modyf_time" type="datetime" mtype="modyf_time" />
+    <field name="idsite" type="int" default="0" createindex="true" relation="bsc_sites" />
+    <field name="pdate" type="date" caption="Data" />
+
+    <field name="ptitle" caption="Tytuł wpisu" type="varchar" size="250" />
+    <field name="pauthor" caption="Autor" type="varchar" size="100" />
+    <field name="pmodrewrite" caption="Przyjazny adres URL" type="varchar" size="250" />
+    <field name="pstatus" caption="Status" type="int" default="0" />
+    <field name="phead" caption="Zajawka wpisu" type="text" />
+    <field name="pbody" caption="Treść wpisu" type="text" />
+    <field name="ptpl" caption="Szablon" type="varchar" size="150" />
+    <field name="pctrl" caption="Kontroler" type="varchar" size="150" />
+    <field name="pactivetab" caption="Aktywna zakładka" type="varchar" size="150" />
+    <field name="wtags" caption="Tagi" type="text" />
+    <field name="pcat" caption="Kategoria" type="varchar" size="150" />
+
+    <field name="pshows" caption="Wyświetleń" type="int" default="0" />
+
+    <field name="pimageid" caption="ID zdjęcia głównego" type="int" default="0" createindex="true" relation="bs_attachments" foreign="true" />
+    <field name="popc_mark" caption="Markdown" type="int" default="1" />
+
+    <field name="pseo_title" caption="Tytuł artykułu (SEO)" type="varchar" size="250" />
+    <field name="pseo_desc" caption="Opis artykułu (SEO)" type="varchar" size="250" />
+    <field name="pseo_keyw" caption="Słowa kluczowe artykułu (SEO)" type="varchar" size="250" />
+
+  </table>
+
+  <table name="bsc_news" caption="CMS: Wiadomości">
+    <field name="add_id_user" type="int" mtype="add_idusers" createindex="true" />
+    <field name="add_time" type="datetime" mtype="add_time" />
+    <field name="modyf_id_user" type="int" mtype="modyf_idusers" createindex="true" />
+    <field name="modyf_time" type="datetime" mtype="modyf_time" />
+    <field name="idsite" type="int" default="0" createindex="true" relation="bsc_sites" />
+    <field name="pdate" type="date" caption="Data" />
+
+    <field name="ptitle" caption="Tytuł wpisu" type="varchar" size="250" />
+    <field name="pauthor" caption="Autor" type="varchar" size="100" />
+    <field name="pmodrewrite" caption="Przyjazny adres URL" type="varchar" size="250" />
+    <field name="pstatus" caption="Status" type="int" default="0" />
+    <field name="phead" caption="Zajawka wpisu" type="text" />
+    <field name="pbody" caption="Treść wpisu" type="text" />
+    <field name="ptpl" caption="Szablon" type="varchar" size="150" />
+    <field name="pctrl" caption="Kontroler" type="varchar" size="150" />
+    <field name="pactivetab" caption="Aktywna zakładka" type="varchar" size="150" />
+    <field name="wtags" caption="Tagi" type="text" />
+    <field name="pcat" caption="Kategoria" type="varchar" size="150" />
+
+    <field name="pshows" caption="Wyświetleń" type="int" default="0" />
+
+    <field name="pimageid" caption="ID zdjęcia głównego" type="int" default="0" createindex="true" relation="bs_attachments" foreign="true" />
+    <field name="popc_mark" caption="Markdown" type="int" default="1" />
+
+    <field name="pseo_title" caption="Tytuł wiadomości (SEO)" type="varchar" size="250" />
+    <field name="pseo_desc" caption="Opis wiadomości (SEO)" type="varchar" size="250" />
+    <field name="pseo_keyw" caption="Słowa kluczowe wiadomości (SEO)" type="varchar" size="250" />
+
+  </table>
+
+  <table name="bsc_events" caption="CMS: Wydarzenia">
+    <field name="add_id_user" type="int" mtype="add_idusers" createindex="true" />
+    <field name="add_time" type="datetime" mtype="add_time" />
+    <field name="modyf_id_user" type="int" mtype="modyf_idusers" createindex="true" />
+    <field name="modyf_time" type="datetime" mtype="modyf_time" />
+    <field name="idsite" type="int" default="0" createindex="true" relation="bsc_sites" />
+    <field name="pdate" type="datetime" caption="Data" />
+
+    <field name="ptitle" caption="Tytuł wpisu" type="varchar" size="250" />
+    <field name="pauthor" caption="Autor" type="varchar" size="100" />
+    <field name="pplace" caption="Miejsce" type="varchar" size="100" />
+    <field name="pmodrewrite" caption="Przyjazny adres URL" type="varchar" size="250" />
+    <field name="pstatus" caption="Status" type="int" default="0" />
+    <field name="phead" caption="Zajawka wpisu" type="text" />
+    <field name="pbody" caption="Treść wpisu" type="text" />
+    <field name="ptpl" caption="Szablon" type="varchar" size="150" />
+    <field name="pctrl" caption="Kontroler" type="varchar" size="150" />
+    <field name="pactivetab" caption="Aktywna zakładka" type="varchar" size="150" />
+    <field name="wtags" caption="Tagi" type="text" />
+    <field name="pcat" caption="Kategoria" type="varchar" size="150" />
+
+    <field name="pshows" caption="Wyświetleń" type="int" default="0" />
+
+    <field name="pimageid" caption="ID zdjęcia głównego" type="int" default="0" createindex="true" relation="bs_attachments" foreign="true" />
+    <field name="popc_mark" caption="Markdown" type="int" default="1" />
+
+    <field name="pseo_title" caption="Tytuł wiadomości (SEO)" type="varchar" size="250" />
+    <field name="pseo_desc" caption="Opis wiadomości (SEO)" type="varchar" size="250" />
+    <field name="pseo_keyw" caption="Słowa kluczowe wiadomości (SEO)" type="varchar" size="250" />
+
+  </table>
+
+
+  <table name="bsc_menu" caption="CMS: Menu na stronie">
+    <field name="add_id_user" type="int" mtype="add_idusers" createindex="true" />
+    <field name="add_time" type="datetime" mtype="add_time" />
+    <field name="modyf_id_user" type="int" mtype="modyf_idusers" createindex="true" />
+    <field name="modyf_time" type="datetime" mtype="modyf_time" />
+    <field name="idsite" type="int" default="0" createindex="true" relation="bsc_sites" />
+    <field name="idr" type="int" default="0" createindex="true" relation="bsc_menu" />
+    <field name="pvisible" type="int" default="1" />
+
+    <field name="ptitle" caption="Tytuł elementu menu" type="varchar" size="250" />
+    <field name="purl" caption="Adres URL" type="varchar" size="250" />
+    <field name="plp" type="int" default="0" />
+    <field name="ptab" caption="Identyfikator zakładki" type="varchar" size="250" />
+    <field name="pimage" caption="Element graficzny" type="varchar" size="250" />
+  </table>
+
+  <table name="bsn_sliders" caption="CMS: Sliders">
+    <field name="add_id_user" type="int" mtype="add_idusers" createindex="true" />
+    <field name="add_time" type="datetime" mtype="add_time" />
+    <field name="modyf_id_user" type="int" mtype="modyf_idusers" createindex="true" />
+    <field name="modyf_time" type="datetime" mtype="modyf_time" />
+
+    <field name="pname" caption="Nazwa produktu" type="varchar" size="250" />
+    <field name="pident" caption="Identyfikator" type="varchar" />
+    <field name="pstatus" caption="Status" type="int" default="0" />
+  </table>
+
+  <table name="bsn_sliders_pr" caption="CMS: Slides">
+    <field name="add_id_user" type="int" mtype="add_idusers" createindex="true" />
+    <field name="add_time" type="datetime" mtype="add_time" />
+    <field name="modyf_id_user" type="int" mtype="modyf_idusers" createindex="true" />
+    <field name="modyf_time" type="datetime" mtype="modyf_time" />
+
+    <field name="pname" caption="Nazwa produktu" type="varchar" size="250" />
+    <field name="idslider" caption="Identyfikator" type="int" relation="bsn_sliders" foregin="true" />
+    <field name="pstatus" caption="Status" type="int" default="1" />
+  </table>
+
+  <table name="bsn_sliders_txt" caption="CMS: Slide-texts">
+    <field name="add_id_user" type="int" mtype="add_idusers" createindex="true" />
+    <field name="add_time" type="datetime" mtype="add_time" />
+    <field name="modyf_id_user" type="int" mtype="modyf_idusers" createindex="true" />
+    <field name="modyf_time" type="datetime" mtype="modyf_time" />
+
+    <field name="idslide" caption="ID slajdu" type="int" relation="bsn_sliders_pr" foregin="true" />
+    <field name="idslider" caption="ID slajdera" type="int" relation="bsn_sliders" foregin="true" />
+    <field name="pcontent" caption="Treść" type="varchar" />
+    <field name="pdata_x" caption="Pozycja pozioma" type="varchar" />
+    <field name="pdata_y" caption="Pozycja pionowa" type="varchar" />
+    <field name="pstatus" caption="Status" type="int" default="1" />
+    <field name="pfontsize" caption="Rozmiar czcionki" type="int" default="40" />
+  </table>
+
+
+  <table name="bsc_blocks" caption="CMS: Blocks">
+    <field name="add_id_user" type="int" mtype="add_idusers" createindex="true" />
+    <field name="add_time" type="datetime" mtype="add_time" />
+    <field name="modyf_id_user" type="int" mtype="modyf_idusers" createindex="true" />
+    <field name="modyf_time" type="datetime" mtype="modyf_time" />
+
+    <field name="pident" caption="Identyfikator" type="varchar" size="240" />
+    <field name="ptitle" caption="Tytuł" type="varchar" size="240" />
+    <field name="pcontent" caption="Treść" type="text" />
+    <field name="purl" caption="URL" type="varchar" size="240" />
+    <field name="pstatus" caption="Status" type="int" default="1" />
+  </table>
+
+
+  <table name="bsc_blocks_pr" caption="CMS: Blocks  - subblocks">
+    <field name="add_id_user" type="int" mtype="add_idusers" createindex="true" />
+    <field name="add_time" type="datetime" mtype="add_time" />
+    <field name="modyf_id_user" type="int" mtype="modyf_idusers" createindex="true" />
+    <field name="modyf_time" type="datetime" mtype="modyf_time" />
+
+    <field name="pident" caption="Identyfikator" type="varchar" size="240" />
+    <field name="iddoc" caption="ID of parent" type="int" relation="bsc_blocks" foregin="true" />
+    <field name="ptitle" caption="Tytuł" type="varchar" size="240" />
+    <field name="purl" caption="URL" type="varchar" size="240" />
+    <field name="pcontent" caption="Treść" type="text" />
+    <field name="pstatus" caption="Status" type="int" default="1" />
+  </table>
+
+
+  <table name="bsc_newsletter_lst" caption="Newsletter">
+    <field name="add_id_user" type="int" mtype="add_idusers" createindex="true" />
+    <field name="add_time" type="datetime" mtype="add_time" />
+    <field name="modyf_id_user" type="int" mtype="modyf_idusers" createindex="true" />
+    <field name="modyf_time" type="datetime" mtype="modyf_time" />
+    <field name="idsite" type="int" default="0" createindex="true" relation="bsc_sites" />
+
+    <field name="pemail" caption="Adres e-mail" type="varchar" size="250" />
+    <field name="pstatus" caption="Status" type="int" default="0" />
+    <field name="pcode" caption="Kod" type="varchar" size="150" />
+  </table>
+
+  <table name="bs_blogtags" caption="Tagi do blogu" attributes="main" synchronize="true">
+    <field name="add_id_user" type="int" mtype="add_idusers" createindex="true" />
+    <field name="add_time" type="datetime" mtype="add_time" />
+    <field name="modyf_id_user" type="int" mtype="modyf_idusers" createindex="true" />
+    <field name="modyf_time" type="datetime" mtype="modyf_time" />
+
+    <field name="pname" caption="Nazwa" type="varchar" size="150" />
+    <field name="wslug" caption="Slug bloga" type="varchar" size="250" />
+  </table>
+
+  <table name="bs_blogtags_pr" caption="Tagi do blogu" attributes="main" synchronize="true" primaryid="idblog,idtag">
+    <field name="idblog" caption="Blog" type="int" foregin="true" createindex="true" relation="bsc_blog" />
+    <field name="idtag" caption="Tag" type="int" foregin="true" createindex="true" relation="bs_blogtags" />
+  </table>
+
+  <table name="bs_eventtags" caption="Tagi do wydarzeń" attributes="main" synchronize="true">
+    <field name="add_id_user" type="int" mtype="add_idusers" createindex="true" />
+    <field name="add_time" type="datetime" mtype="add_time" />
+    <field name="modyf_id_user" type="int" mtype="modyf_idusers" createindex="true" />
+    <field name="modyf_time" type="datetime" mtype="modyf_time" />
+
+    <field name="pname" caption="Nazwa" type="varchar" size="150" />
+    <field name="wslug" caption="Slug wydarzeń" type="varchar" size="250" />
+  </table>
+
+  <table name="bs_eventtags_pr" caption="Tagi do wydarzeń" attributes="main" synchronize="true" primaryid="idevent,idtag">
+    <field name="idevent" caption="Wydarzenia" type="int" foregin="true" createindex="true" relation="bsc_events" />
+    <field name="idtag" caption="Tag" type="int" foregin="true" createindex="true" relation="bs_eventtags" />
+  </table>
+
+  <table name="bs_newstags" caption="Tagi do wiadomości" attributes="main" synchronize="true">
+    <field name="add_id_user" type="int" mtype="add_idusers" createindex="true" />
+    <field name="add_time" type="datetime" mtype="add_time" />
+    <field name="modyf_id_user" type="int" mtype="modyf_idusers" createindex="true" />
+    <field name="modyf_time" type="datetime" mtype="modyf_time" />
+
+    <field name="pname" caption="Nazwa" type="varchar" size="150" />
+    <field name="wslug" caption="Slug wiadomości" type="varchar" size="250" />
+  </table>
+
+  <table name="bs_newstags_pr" caption="Tagi do wiadomości" attributes="main" synchronize="true" primaryid="idnews,idtag">
+    <field name="idnews" caption="Wydarzenia" type="int" foregin="true" createindex="true" relation="bsc_news" />
+    <field name="idtag" caption="Tag" type="int" foregin="true" createindex="true" relation="bs_newstags" />
+  </table>
+
+
+  <table name="bs_catprod" caption="Kategorie kontrahenta" attributes="main" synchronize="true">
+    <field name="pidcontractor" caption="ID klienta" type="int" createindex="true" relation="bs_contractors" foregin="true" />
+    <field name="idg" caption="ID kategorii" type="int" foregin="true" createindex="true" relation="bs_groups" />
+    <field name="ppath" caption="Ścieżka" type="varchar" size="200" />
+  </table>
+
+  <table name="bs_contractors" extend="true">
+    <field name="cms_firstname" caption="Imię użytkownika" type="varchar" size="100" />
+    <field name="cms_email" caption="E-mail konta WWW" type="varchar" size="100" />
+    <field name="cms_pass" caption="Hasło" type="varchar" size="100" />
+    <field name="cms_datereg" caption="Data rejestracji" type="datetime" />
+    <field name="cms_dateact" caption="Data aktywacji" type="datetime" />
+    <field name="cms_idsite" caption="ID powiązanej strony" type="int" relation="bsc_sites" />
+    <field name="cms_status" caption="Status" type="int" default="0" />
+    <field name="cms_md5" caption="MD5" type="varchar" size="100" />
+    <field name="cms_subdomain" caption="Subdomena" type="varchar" size="100" />
+    <field name="cms_hashkey" caption="HashKey do funkcji autologin" type="varchar" size="120" />
+  </table>
+
+
+ </tables>
+
+
+
+</module>

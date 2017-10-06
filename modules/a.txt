@@ -1,0 +1,37 @@
+<module name="BinSoft.Poligon" 	>
+
+	<!-- <>& al "">>ala ma kota -->
+	<a-b-c_ab:c34 al:_-a="1" ma="2!@#$%^*()-_aa=+\|[]{}:&abc;'?/" a='a' 90 >
+		00abc-sde:_ad00 11  
+		<a  aa  >
+			"abc" 123 $%
+			ab
+
+			asd &a-_:a11bc; f
+		</a>
+	</a-b-c>
+
+ <forms>
+ 
+  <form name="Okienko">
+     <edit name="imie1" caption="Podaj imiê" />
+     <edit name="imie2" caption="Podaj imiê" top="-1" www-class="sasdfaf" />
+     <edit name="imie3" caption="Podaj imiê" top="-1" />
+	 
+	 <layout>
+	   <edit name="imie3" caption="Podaj imiê" top="-1" />
+	 </layout>
+	 
+  </form>
+ 
+ 
+ </forms>
+
+ <views>
+ </views>
+ 
+ <forms>
+ 
+ </forms>
+
+</module>

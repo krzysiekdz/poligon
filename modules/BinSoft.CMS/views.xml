@@ -1,0 +1,201 @@
+<module name="BinSoft.CMS" >
+
+ <views>
+  <view name="SitesView" caption="Strony WWW">
+    <field name="ptitle" caption="Tytuł" type="varchar" width="300" search="true" />
+    <field name="purl" caption="URL" type="varchar" width="200" color="blue" search="true" />
+    <query table="bsc_sites" form="SiteForm" />
+  </view>
+
+  <view name="ArticlesView" caption="Artykuły">
+    <field name="ptitle" caption="Tytuł" type="varchar" width="300" search="true" />
+    <field name="pmodrewrite" caption="Przyjazny adres" type="varchar" width="200" search="true" />
+    <field name="idsite" caption="Strona" default="0" width="200" type="int" mtype="select">
+            <option id="0">Dowolna</option>
+            <option table="bsc_sites" id="id" getfields="id,ptitle" orderby="ptitle">{ptitle}</option>
+    </field>
+    <query table="bsc_articles" form="ArticleForm" getfields="pstatus" />
+    <panels width="120">
+      <rule type="combobox" field="idsite" fieldtype="int" width="250" caption="Strona WWW:" padding="5">
+              <option id="">Wszystkie</option>
+              <option id="0">Dowolna</option>
+              <option id="id" table="bsc_sites" getfields="id,ptitle" orderby="ptitle" addwhere="OR idsite=0">{ptitle}</option>
+       </rule>
+       <rule type="checkboxlist" field="pstatus" fieldtype="date" caption="1:Widoczne|!=1:Ukryte" operator="OR" columncount="2" padding="5" />
+    </panels>
+    <styles>
+      <rule field="pstatus" value="0" style="color=gray;"/>
+    </styles>
+  </view>
+
+  <view name="BlogView" caption="Artykuły">
+    <field name="pdate" caption="Data" type="date" mtype="datetimefriendly" width="120" align="center" />
+    <field name="ptitle" caption="Tytuł" type="varchar" width="300" search="true" />
+    <field name="pmodrewrite" caption="Przyjazny adres" type="varchar" width="200" search="true" />
+    <field name="idsite" caption="Strona" default="0" width="200" type="int" mtype="select">
+            <option id="0">Dowolna</option>
+            <option table="bsc_sites" id="id" getfields="id,ptitle" orderby="ptitle">{ptitle}</option>
+    </field>
+    <query table="bsc_blog" form="BlogForm" getfields="pstatus" />
+    <panels width="120">
+     <rule type="combobox" field="idsite" fieldtype="int" width="250" caption="Strona WWW" padding="5">
+            <option id="">Wszystkie</option>
+            <option id="0">Dowolna</option>
+            <option id="id" table="bsc_sites" getfields="id,ptitle" orderby="ptitle" addwhere="OR idsite=0">{ptitle}</option>
+     </rule>
+     <rule type="checkboxlist" field="pstatus" fieldtype="date" caption="1:Widoczne|!=1:Ukryte" operator="OR" columncount="2" padding="5" />
+    </panels>
+    <styles>
+      <rule field="pstatus" value="0" style="color=gray;"/>
+    </styles>
+  </view>
+
+  <view name="NewsView" caption="Wiadomości">
+    <field name="pdate" caption="Data" type="date" mtype="datetimefriendly" width="120" align="center" />
+    <field name="ptitle" caption="Tytuł" type="varchar" width="300" search="true" />
+    <field name="pmodrewrite" caption="Przyjazny adres" type="varchar" width="200" search="true" />
+    <field name="idsite" caption="Strona" default="0" width="200" type="int" mtype="select">
+            <option id="0">Dowolna</option>
+            <option table="bsc_sites" id="id" getfields="id,ptitle" orderby="ptitle">{ptitle}</option>
+    </field>
+    <query table="bsc_news" form="NewsForm" getfields="pstatus" />
+    <panels width="120">
+     <rule type="combobox" field="idsite" fieldtype="int" width="250" caption="Strona WWW:" padding="5">
+            <option id="">Wszystkie</option>
+            <option id="0">Dowolna</option>
+            <option id="id" table="bsc_sites" getfields="id,ptitle" orderby="ptitle" addwhere="OR idsite=0">{ptitle}</option>
+     </rule>
+     <rule type="checkboxlist" field="pstatus" fieldtype="date" caption="1:Widoczne|!=1:Ukryte" operator="OR" columncount="2" padding="5" />
+    </panels>
+    <styles>
+      <rule field="pstatus" value="0" style="color=gray;"/>
+    </styles>
+  </view>
+
+  <view name="EventsView" caption="Zdarzenia" defaultrowheight="2">
+    <field name="pdate" caption="Data" type="datetime" mtype="datetimefriendly" width="120" align="center" />
+    <field name="ptitle" caption="Tytuł" type="varchar" width="300" search="true" />
+    <field name="pmodrewrite" caption="Przyjazny adres" type="varchar" width="200" search="true" />
+    <field name="idsite" caption="Strona" default="0" width="200" type="int" mtype="select">
+            <option id="0">Dowolna</option>
+            <option table="bsc_sites" id="id" getfields="id,ptitle" orderby="ptitle">{ptitle}</option>
+    </field>
+    <query table="bsc_events" form="EventForm" getfields="pstatus" />
+    <panels width="120">
+     <rule type="combobox" field="idsite" fieldtype="int" width="250" caption="Strona WWW:" padding="5">
+            <option id="">Wszystkie</option>
+            <option id="0">Dowolna</option>
+            <option id="id" table="bsc_sites" getfields="id,ptitle" orderby="ptitle" addwhere="OR idsite=0">{ptitle}</option>
+     </rule>
+     <rule type="checkboxlist" field="pstatus" fieldtype="date" caption="1:Widoczne|!=1:Ukryte" operator="OR" columncount="2" padding="5" />
+    </panels>
+    <styles>
+      <rule field="pstatus" value="0" style="color=gray;"/>
+    </styles>
+  </view>
+
+
+  <view name="LogiDotpayView" caption="Logi płatności DotPay">
+    <field name="add_time" caption="Data" type="datetime" width="120" align="center" />
+    <field name="ftid" caption="Transakcja" type="varchar" width="100" align="center" search="true" />
+    <field name="fdesc" caption="Opis" type="varchar" width="250" search="true" />
+    <field name="fstatus" caption="Status" type="int" mtype="select" align="center" width="100">
+     <option id="0">Nieznany</option>
+     <option id="1">Nowa</option>
+     <option id="2">Wykonana</option>
+     <option id="3">Odmowa</option>
+     <option id="4">Anulowana</option>
+     <option id="5">Reklamacja</option>
+    </field>
+    <field name="famount" caption="Kwota" type="double" mtype="price" align="right" width="100" />
+    <field name="femail" caption="E-mail" type="varchar" width="150" search="true" />
+
+    <query table="bsc_log_dotpay" form="@" />
+    <design>
+      <action name="acAddRecord" visible="false" />
+      <action name="acDeleteRecord" visible="false" />
+      <action name="acEditRecord" visible="false" />
+    </design>
+  </view>
+
+
+  <view name="SlidersView" caption="Sliders">
+    <field name="pname" caption="Nazwa" type="varchar" width="300" search="true" />
+    <field name="pident" caption="Identyfikator" type="varchar" width="100" />
+    <field name="pstatus" caption="Status" type="int" mtype="select" align="center" width="100">
+     <option id="0">Nieaktywny</option>
+     <option id="1">Aktywny</option>
+    </field>
+    <query table="bsn_sliders" form="SliderForm" />
+  </view>
+
+  <view name="SlidersViewLevel1" caption="Sliders">
+    <field name="pname" caption="Tytuł" type="varchar" width="500" search="true" />
+    <field name="pstatus" caption="Status" type="int" mtype="select" align="center" width="100">
+     <option id="0">Nieaktywny</option>
+     <option id="1">Aktywny</option>
+    </field>
+    <query table="bsn_sliders_pr" form="SliderFormLevel1" mustparentsave="true" default="idslider={_parentRecordID_};" where="idslider={_parentRecordID_}" />
+  </view>
+
+
+  <view name="SlidersViewLevel2" caption="Sliders">
+    <field name="pcontent" caption="Treść" type="varchar" width="300" search="true" />
+    <field name="pstatus" caption="Status" type="int" mtype="select" align="center" width="100">
+     <option id="0">Nieaktywny</option>
+     <option id="1">Aktywny</option>
+    </field>
+    <query table="bsn_sliders_txt" form="SliderFormLevel2" mustparentsave="true" default="idslide={_parentRecordID_};idslider={$idslider}" where="idslide={_parentRecordID_}" />
+  </view>
+
+
+  <view name="BlocksView" caption="HTML Blocks">
+    <field name="pident" caption="Identyfikator" type="varchar" width="100" />
+    <field name="ptitle" caption="Tytuł" type="varchar" width="200" />
+    <field name="pcontent" caption="Treść" type="varchar" width="300" search="true" />
+    <field name="pstatus" caption="Status" type="int" mtype="select" align="center" width="100">
+     <option id="0">Nieaktywny</option>
+     <option id="1">Aktywny</option>
+    </field>
+    <query table="bsc_blocks" form="BlockForm" />
+  </view>
+
+
+  <view name="BlocksViewLevel1" caption="HTML Blocks - subblocks">
+    <field name="pident" caption="Identyfikator" type="varchar" width="100" />
+    <field name="ptitle" caption="Tytuł" type="varchar" width="200" />
+    <field name="pcontent" caption="Treść" type="varchar" width="300" search="true" />
+    <field name="pstatus" caption="Status" type="int" mtype="select" align="center" width="100">
+     <option id="0">Nieaktywny</option>
+     <option id="1">Aktywny</option>
+    </field>
+    <query table="bsc_blocks_pr" form="BlockFormLevel1" mustparentsave="true" default="iddoc={_parentRecordID_};" where="iddoc={_parentRecordID_}" />
+  </view>
+
+
+  <view name="GaleriesView" caption="Galerie">
+    <field name="idsite" caption="Strona" default="0" width="200" type="int" mtype="select">
+            <option id="0">Dowolna</option>
+            <option table="bsc_sites" id="id" getfields="id,ptitle" orderby="ptitle">{ptitle}</option>
+    </field>
+    <field name="pmodrewrite" caption="Przyjazny adres" type="varchar" width="200" search="true" />
+    <field name="ptitle" caption="Nazwa" type="varchar" width="300" search="true" />
+    <field name="pident" caption="Identyfikator" type="varchar" width="100" />
+    <query table="bsc_galleries" form="GalleryForm" getfields="pstatus" />
+    <panels width="120">
+      <rule type="combobox" field="idsite" fieldtype="int" width="250" caption="Strona WWW:" padding="5">
+              <option id="">Wszystkie</option>
+              <option id="0">Dowolna</option>
+              <option id="id" getfields="id,ptitle" orderby="ptitle" table="bsc_sites" addwhere="OR idsite=0">{ptitle}</option>
+       </rule>
+    </panels>
+    <styles>
+      <rule field="pstatus" value="0" style="color=gray;"/>
+    </styles>
+  </view>
+
+ </views>
+
+
+
+</module>
